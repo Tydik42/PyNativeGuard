@@ -4,22 +4,19 @@ import time
 import zlib
 import binascii
 
-def try_custom_extension():
-    manual_tests_dir = os.path.join(
-        os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
-        "manual"
-    )
     
-    if os.path.exists(manual_tests_dir):
-        sys.path.append(manual_tests_dir)
+def try_custom_extension():
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    if current_dir not in sys.path:
+        sys.path.append(current_dir)
         
     try:
         import test_hook
-        print(f"[Python] Found custom C-extension 'test_hook'. triggering...")
-        test_hook.trigger("Message from Custom Extension")
+        print(f"[Python] Found custom C-extension. Triggering...")
+        test_hook.trigger("TEST_MESSAGE")
         return True
-    except ImportError:
-        print("[Python] Custom 'test_hook' module not found. Skipping.")
+    except ImportError as e:
+        print(f"[Python] Custom 'test_hook' failed to import: {e}")
         return False
 
 def try_standard_libs():

@@ -1,5 +1,5 @@
 add_library(png_core STATIC
-    dummy.cpp
+    profiler.cpp
 )
 target_link_libraries(png_core PUBLIC 
     png_headers
